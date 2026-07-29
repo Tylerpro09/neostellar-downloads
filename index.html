@@ -19,7 +19,7 @@ h2{margin:70px 0 20px;font-size:1.5rem;letter-spacing:-.03em}.download-panel{pad
 <section class="hero"><div><div class="eyebrow">Descarga oficial · Windows · Linux · Android</div><h1>Explora el <span class="gradient">espacio</span> a tu manera.</h1><p class="lead">Instala Neostellar y entra en una experiencia espacial con multijugador, modding seguro y minijuegos no canónicos.</p><div class="actions"><a id="primary-download" class="button primary" href="#downloads">Detectando dispositivo…</a><a class="button secondary" href="https://github.com/Tylerpro09/neostellar-releases/releases/tag/v2.1.25" rel="noopener">Ver detalles</a></div><div class="meta"><span>Versión 2.1.25</span><span>Windows firmado</span><span>3 plataformas</span></div></div><div class="visual" aria-label="Ilustración espacial"><div class="orbit"></div><div class="core">✦</div></div></section>
 <h2 id="downloads">Descarga para tu dispositivo</h2><section class="download-panel"><div id="device-banner" class="device-banner" role="status" aria-live="polite">Detectando tu dispositivo…</div><div class="platforms">
 <a class="platform-card" data-platform="windows" href="https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.25/Neostellar-Setup-2.1.25-x64.exe"><div class="platform-icon">▣</div><h3>Windows</h3><p>Windows 10/11 · 64 bits · instalador firmado</p><span class="platform-tag">DESCARGAR .EXE ↗</span><code>SHA-256: 26D520D7AB9FF10FA03AC3282AE23E71954ACFD38A2525BA30CE51DA343C73BA</code></a>
-<a class="platform-card" data-platform="linux" href="https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.25/Neostellar-linux-x86_64.tar.gz"><div class="platform-icon">◈</div><h3>Linux</h3><p>x86_64 · extrae el paquete y ejecuta <code>neostellar</code></p><span class="platform-tag">DESCARGAR .TAR.GZ ↗</span><code>SHA-256: DA5340BDA0429361951B42138D0FDFED2263CBFDFBF72CF08FACE6C06A4D0A67</code></a>
+<a class="platform-card" data-platform="linux" href="https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.25/Neostellar-linux-x86_64-2.1.25-fixed.tar.gz"><div class="platform-icon">◈</div><h3>Linux</h3><p>x86_64 · extrae el paquete y ejecuta <code>neostellar</code></p><span class="platform-tag">DESCARGAR .TAR.GZ ↗</span><code>SHA-256: BBA344A89F398BE4D61967EF296336CF6B143EBB3FC2B8FC2389D15C3772733B</code></a>
 <a class="platform-card" data-platform="android" href="https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.25/Neostellar-Android-2.1.25.apk"><div class="platform-icon">◇</div><h3>Android</h3><p>Android 7.0+ · edición móvil horizontal</p><span class="platform-tag">DESCARGAR .APK ↗</span><code>SHA-256: 77AE6E899BD637D6E43315A51CD1F61EA63A24B91F095E1F97DCEE0213D5D0DA</code></a>
 </div><p class="hint">Si el navegador no puede identificar tu dispositivo, elige manualmente una de las tres versiones.</p></section>
 <h2>Qué incluye esta versión</h2><section class="grid"><article class="card"><div class="icon">🎮</div><h3>Minijuegos</h3><p>Sección independiente con desplazamiento horizontal y botón INICIAR.</p></article><article class="card"><div class="icon">🐤</div><h3>Flappy Bird</h3><p>Modo no canónico con sprites y sonidos integrados, separado del multijugador oficial.</p></article><article class="card"><div class="icon">🛡️</div><h3>Juego protegido</h3><p>Los mods y sus recursos permanecen separados de las partidas oficiales.</p></article></section>
@@ -30,28 +30,7 @@ h2{margin:70px 0 20px;font-size:1.5rem;letter-spacing:-.03em}.download-panel{pad
 (function(){
   const downloads = {
     windows: { label: 'Descargar Neostellar para Windows', banner: 'Windows detectado · instalador recomendado', href: 'https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.25/Neostellar-Setup-2.1.25-x64.exe' },
-    linux: { label: 'Descargar Neostellar para Linux', banner: 'Linux detectado · paquete x86_64 recomendado', href: 'https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.25/Neostellar-linux-x86_64.tar.gz' },
+    linux: { label: 'Descargar Neostellar para Linux', banner: 'Linux detectado · paquete x86_64 recomendado', href: 'https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.25/Neostellar-linux-x86_64-2.1.25-fixed.tar.gz' },
     android: { label: 'Descargar Neostellar para Android', banner: 'Android detectado · APK móvil recomendado', href: 'https://github.com/Tylerpro09/neostellar-releases/download/v2.1.25/Neostellar-Android-2.1.25.apk' }
   };
   const ua = navigator.userAgent.toLowerCase();
-  const platform = (navigator.userAgentData && navigator.userAgentData.platform || navigator.platform || '').toLowerCase();
-  let detected = 'other';
-  if (ua.indexOf('android') !== -1) detected = 'android';
-  else if (ua.indexOf('linux') !== -1 || platform.indexOf('linux') !== -1) detected = 'linux';
-  else if (ua.indexOf('windows') !== -1 || platform.indexOf('win') !== -1) detected = 'windows';
-  const primary = document.getElementById('primary-download');
-  const banner = document.getElementById('device-banner');
-  if (downloads[detected]) {
-    primary.href = downloads[detected].href;
-    primary.textContent = '⬇ ' + downloads[detected].label;
-    banner.textContent = downloads[detected].banner;
-    const card = document.querySelector('[data-platform="' + detected + '"]');
-    if (card) card.classList.add('recommended');
-  } else {
-    primary.textContent = 'Ver todas las versiones';
-    banner.textContent = 'Elige Windows, Linux o Android manualmente';
-  }
-})();
-</script>
-</body>
-</html>
