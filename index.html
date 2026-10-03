@@ -237,15 +237,15 @@
   <main class="wrap">
     <section class="hero" aria-labelledby="hero-title">
       <div>
-        <div class="eyebrow">Centro de descargas · versión 2.1.45</div>
+        <div id="release-eyebrow" class="eyebrow">Centro de descargas · versión 2.1.45</div>
         <h1 id="hero-title">Tu próxima misión empieza en el <span class="gradient">espacio.</span></h1>
         <p class="lead">Descarga Neostellar para tu dispositivo y explora un shooter espacial 2D con modo global, multijugador, mods seguros y minijuegos no canónicos.</p>
         <div class="actions">
           <a id="primary-download" class="button primary" href="#downloads">Elegir descarga</a>
-          <a class="button secondary" href="https://github.com/Tylerpro09/neostellar-releases/releases/tag/v2.1.45" rel="noopener">Ver cambios de v2.1.45</a>
+          <a id="release-link" class="button secondary" href="https://github.com/Tylerpro09/neostellar-releases/releases/tag/v2.1.45" rel="noopener">Ver cambios de v2.1.45</a>
         </div>
         <div class="meta" aria-label="Datos de la versión">
-          <span>v2.1.45 estable</span>
+          <span id="release-badge">v2.1.45 estable</span>
           <span>Servidor actualizado</span>
           <span>Windows · Linux · Android</span>
         </div>
@@ -277,33 +277,33 @@
             <div class="platform-icon">▣</div>
             <h3>Windows</h3>
             <p>Windows 10/11 · 64 bits · instalador x64 firmado.</p>
-            <span class="platform-version">v2.1.45 · recomendada</span>
-            <a class="platform-tag" href="https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.45/Neostellar-Setup-2.1.45-x64.exe">DESCARGAR .EXE ↗</a>
+            <span data-platform-version class="platform-version">v2.1.45 · recomendada</span>
+            <a data-download-link class="platform-tag" href="https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.45/Neostellar-Setup-2.1.45-x64.exe">DESCARGAR .EXE ↗</a>
             <details class="checksum">
               <summary>Ver SHA-256</summary>
-              <code>5404418F5A71AC3B4BBF772BA68DDD4C2A3BDB32BC53B82360977604862DECF6</code>
+              <code data-checksum>5404418F5A71AC3B4BBF772BA68DDD4C2A3BDB32BC53B82360977604862DECF6</code>
             </details>
           </article>
           <article class="platform-card" data-platform="linux">
             <div class="platform-icon">◈</div>
             <h3>Linux</h3>
             <p>x86_64 · paquete con instrucciones incluidas.</p>
-            <span class="platform-version">v2.1.45 · actualizado</span>
-            <a class="platform-tag" href="https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.45/Neostellar-linux-x86_64-2.1.45.tar.gz">DESCARGAR .TAR.GZ ↗</a>
+            <span data-platform-version class="platform-version">v2.1.45 · actualizado</span>
+            <a data-download-link class="platform-tag" href="https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.45/Neostellar-linux-x86_64-2.1.45.tar.gz">DESCARGAR .TAR.GZ ↗</a>
             <details class="checksum">
               <summary>Ver SHA-256</summary>
-              <code>C6DFC4A3B6B6CA77019FF60DE804D5163F7AE941A16258BACA392B75DF8E44E9</code>
+              <code data-checksum>C6DFC4A3B6B6CA77019FF60DE804D5163F7AE941A16258BACA392B75DF8E44E9</code>
             </details>
           </article>
           <article class="platform-card" data-platform="android">
             <div class="platform-icon">◇</div>
             <h3>Android</h3>
             <p>Android 7.0+ · edición móvil horizontal.</p>
-            <span class="platform-version">v2.1.42 · versión móvil estable</span>
-            <a class="platform-tag" href="https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.42/Neostellar-Android-2.1.42.apk">DESCARGAR .APK ↗</a>
+            <span data-platform-version class="platform-version">v2.1.42 · versión móvil estable</span>
+            <a data-download-link class="platform-tag" href="https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.42/Neostellar-Android-2.1.42.apk">DESCARGAR .APK ↗</a>
             <details class="checksum">
               <summary>Ver SHA-256</summary>
-              <code>9AE393CD0ECD670C65B8D9D67BADBF8F65AC8AC993AA3459AC1FE6B016932F1A</code>
+              <code data-checksum>9AE393CD0ECD670C65B8D9D67BADBF8F65AC8AC993AA3459AC1FE6B016932F1A</code>
             </details>
           </article>
         </div>
@@ -401,43 +401,102 @@
 
   <script>
     (() => {
-      const downloads = {
+      const MANIFEST_URL = "https://raw.githubusercontent.com/Tylerpro09/neostellar-releases/main/latest.json";
+      let liveVersion = "2.1.45";
+
+      const fallback = {
         windows: {
-          label: "Descargar Neostellar para Windows",
-          banner: "Windows detectado · instalador v2.1.45 recomendado",
-          href: "https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.45/Neostellar-Setup-2.1.45-x64.exe"
+          href: "https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.45/Neostellar-Setup-2.1.45-x64.exe",
+          version: "2.1.45",
+          sha256: "5404418F5A71AC3B4BBF772BA68DDD4C2A3BDB32BC53B82360977604862DECF6"
         },
         linux: {
-          label: "Descargar Neostellar para Linux",
-          banner: "Linux detectado · paquete x86_64 v2.1.45 recomendado",
-          href: "https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.45/Neostellar-linux-x86_64-2.1.45.tar.gz"
+          href: "https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.45/Neostellar-linux-x86_64-2.1.45.tar.gz",
+          version: "2.1.45",
+          sha256: "C6DFC4A3B6B6CA77019FF60DE804D5163F7AE941A16258BACA392B75DF8E44E9"
         },
         android: {
-          label: "Descargar Neostellar para Android",
-          banner: "Android detectado · APK móvil v2.1.42 estable",
-          href: "https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.42/Neostellar-Android-2.1.42.apk"
+          href: "https://github.com/Tylerpro09/neostellar-releases/download/v2.1.42/Neostellar-Android-2.1.42.apk",
+          version: "2.1.42",
+          sha256: "9AE393CD0ECD670C65B8D9D67BADBF8F65AC8AC993AA3459AC1FE6B016932F1A"
         }
       };
-
-      const ua = navigator.userAgent.toLowerCase();
-      let platform = null;
-      if (ua.includes("android")) platform = "android";
-      else if (ua.includes("windows")) platform = "windows";
-      else if (ua.includes("linux")) platform = "linux";
+      let activeDownloads = { ...fallback };
 
       const primary = document.getElementById("primary-download");
       const banner = document.getElementById("device-banner");
       const cards = document.querySelectorAll(".platform-card");
-      if (platform && downloads[platform]) {
-        primary.textContent = downloads[platform].label;
-        primary.href = downloads[platform].href;
-        banner.textContent = downloads[platform].banner;
-        cards.forEach(card => card.classList.toggle("recommended", card.dataset.platform === platform));
-      } else {
-        primary.textContent = "Elegir descarga";
-        primary.href = "#downloads";
-        banner.textContent = "Dispositivo no identificado · elige una plataforma";
-      }
+      const releaseEyebrow = document.getElementById("release-eyebrow");
+      const releaseLink = document.getElementById("release-link");
+      const releaseBadge = document.getElementById("release-badge");
+
+      const versionFromUrl = url => {
+        const match = String(url || "").match(/v(\d+\.\d+\.\d+)/);
+        return match ? match[1] : "";
+      };
+
+      const applyDevice = () => {
+        const ua = navigator.userAgent.toLowerCase();
+        let platform = null;
+        if (ua.includes("android")) platform = "android";
+        else if (ua.includes("windows")) platform = "windows";
+        else if (ua.includes("linux")) platform = "linux";
+        if (platform && activeDownloads[platform]) {
+          primary.textContent = platform === "windows"
+            ? "Descargar Neostellar para Windows"
+            : platform === "linux"
+              ? "Descargar Neostellar para Linux"
+              : "Descargar Neostellar para Android";
+          primary.href = activeDownloads[platform].href;
+          banner.textContent = platform === "windows"
+            ? "Windows detectado · instalador recomendado"
+            : platform === "linux"
+              ? "Linux detectado · paquete x86_64 recomendado"
+              : "Android detectado · APK móvil estable";
+          cards.forEach(card => card.classList.toggle("recommended", card.dataset.platform === platform));
+        } else {
+          primary.textContent = "Elegir descarga";
+          primary.href = "#downloads";
+          banner.textContent = "Dispositivo no identificado · elige una plataforma";
+        }
+      };
+
+      const applyManifest = manifest => {
+        const version = String(manifest.version || "").trim();
+        if (!/^\d+\.\d+\.\d+$/.test(version) || !manifest.platforms) throw new Error("manifest_invalid");
+        liveVersion = version;
+        const tag = "v" + version;
+        releaseEyebrow.textContent = "Centro de descargas · versión " + version;
+        releaseLink.href = "https://github.com/Tylerpro09/neostellar-releases/releases/tag/" + tag;
+        releaseLink.textContent = "Ver cambios de " + tag;
+        releaseBadge.textContent = tag + (manifest.channel === "stable" ? " estable" : " " + (manifest.channel || "disponible"));
+        cards.forEach(card => {
+          const platform = card.dataset.platform;
+          const info = manifest.platforms[platform];
+          if (!info || !info.url) return;
+          const actualVersion = versionFromUrl(info.url) || version;
+          activeDownloads[platform] = { href: info.url, version: actualVersion, sha256: info.sha256 || "" };
+          const link = card.querySelector("[data-download-link]");
+          const versionLabel = card.querySelector("[data-platform-version]");
+          const checksum = card.querySelector("[data-checksum]");
+          link.href = info.url;
+          versionLabel.textContent = "v" + actualVersion + (info.updates_disabled ? " · versión móvil estable" : platform === "windows" ? " · recomendada" : " · actualizado");
+          checksum.textContent = info.sha256 ? String(info.sha256).toUpperCase() : "No disponible";
+        });
+        applyDevice();
+      };
+
+      applyDevice();
+
+      fetch(MANIFEST_URL + "?cb=" + Date.now(), { cache: "no-store" })
+        .then(response => {
+          if (!response.ok) throw new Error("manifest_http_" + response.status);
+          return response.json();
+        })
+        .then(applyManifest)
+        .catch(() => {
+          releaseBadge.textContent = "v" + liveVersion + " · copia local";
+        });
 
       const dot = document.getElementById("server-dot");
       const label = document.getElementById("server-label");
@@ -449,7 +508,7 @@
           if (!response.ok) throw new Error("offline");
           dot.classList.add("online");
           label.textContent = "Servidor online";
-          copy.textContent = "El servicio responde correctamente y acepta la versión 2.1.45.";
+          copy.textContent = "El servicio responde correctamente y acepta la versión " + liveVersion + ".";
         })
         .catch(() => {
           dot.classList.add("offline");
