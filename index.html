@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#07111f">
-  <meta name="description" content="Descarga oficial de Neostellar para Windows, Linux y Android.">
+  <meta name="description" content="Descarga oficial de Neostellar para Windows y Linux.">
   <title>Neostellar · Centro de descargas</title>
   <style>
     :root {
@@ -159,6 +159,7 @@
     .platform-icon { color: var(--cyan); font-size: 1.55rem; }
     .platform-version { display: inline-flex; align-self: flex-start; margin: 14px 0 12px; padding: 4px 8px; border-radius: 7px; color: var(--muted-strong); background: rgba(255,255,255,.06); font-size: .73rem; font-weight: 800; }
     .platform-tag { display: inline-flex; justify-content: center; align-items: center; min-height: 42px; margin-top: auto; border-radius: 11px; color: #07101d; background: linear-gradient(110deg, #a8b5ff, var(--cyan)); font-size: .77rem; font-weight: 900; letter-spacing: .05em; }
+    .platform-tag-disabled { color: var(--muted-strong); background: rgba(255,255,255,.08); cursor: not-allowed; opacity: .82; }
     .checksum { margin-top: 12px; }
     .checksum summary { cursor: pointer; color: var(--muted-strong); font-size: .72rem; }
     .checksum code { display: block; margin-top: 7px; color: #aebfff; font-size: .65rem; overflow-wrap: anywhere; }
@@ -247,7 +248,7 @@
         <div class="meta" aria-label="Datos de la versión">
           <span id="release-badge">v2.1.45 estable</span>
           <span>Servidor actualizado</span>
-          <span>Windows · Linux · Android</span>
+          <span>Windows · Linux</span>
         </div>
       </div>
       <div class="hero-art" aria-label="Panel visual de Neostellar">
@@ -268,7 +269,7 @@
           <div class="eyebrow">Instaladores oficiales</div>
           <h2 id="downloads-title">Descarga tu versión</h2>
         </div>
-        <p>El botón principal se adapta automáticamente a tu sistema. También puedes elegir otra plataforma manualmente.</p>
+        <p>El botón principal se adapta automáticamente a tu sistema. Elige Windows o Linux para descargar el cliente compatible.</p>
       </div>
       <div class="download-panel">
         <div id="device-banner" class="device-banner" role="status" aria-live="polite">Detectando tu dispositivo…</div>
@@ -295,19 +296,15 @@
               <code data-checksum>C6DFC4A3B6B6CA77019FF60DE804D5163F7AE941A16258BACA392B75DF8E44E9</code>
             </details>
           </article>
-          <article class="platform-card" data-platform="android">
+          <article class="platform-card" data-platform="android" aria-labelledby="android-support-title">
             <div class="platform-icon">◇</div>
-            <h3>Android</h3>
-            <p>Android 7.0+ · edición móvil horizontal.</p>
-            <span data-platform-version class="platform-version">v2.1.42 · versión móvil estable</span>
-            <a data-download-link class="platform-tag" href="https://github.com/Tylerpro09/neostellar-releases/releases/download/v2.1.42/Neostellar-Android-2.1.42.apk">DESCARGAR .APK ↗</a>
-            <details class="checksum">
-              <summary>Ver SHA-256</summary>
-              <code data-checksum>9AE393CD0ECD670C65B8D9D67BADBF8F65AC8AC993AA3459AC1FE6B016932F1A</code>
-            </details>
+            <h3 id="android-support-title">Android</h3>
+            <p>La edición Android ya no recibe soporte, actualizaciones ni descargas oficiales.</p>
+            <span data-platform-version class="platform-version">v2.1.42 · soporte finalizado</span>
+            <span class="platform-tag platform-tag-disabled" role="status" aria-label="Android: fin de soporte">FIN DE SOPORTE</span>
           </article>
         </div>
-        <p class="hint">La versión Android permanece congelada hasta publicar una edición móvil definitiva.</p>
+        <p class="hint">Android: fin de soporte. El botón se mantiene como aviso informativo y no ofrece ninguna descarga.</p>
       </div>
     </section>
 
@@ -378,7 +375,7 @@
       <div class="faq-list">
         <details class="faq">
           <summary>¿Qué versión debo descargar?</summary>
-          <p>Usa Windows o Linux según tu ordenador. La detección automática resalta la opción adecuada; Android sigue en la versión móvil estable 2.1.42.</p>
+          <p>Usa Windows o Linux según tu ordenador. La detección automática resalta la opción adecuada. Android ya no tiene soporte oficial.</p>
         </details>
         <details class="faq">
           <summary>¿Por qué el multijugador puede pedirme actualizar?</summary>
@@ -415,11 +412,6 @@
           version: "2.1.45",
           sha256: "C6DFC4A3B6B6CA77019FF60DE804D5163F7AE941A16258BACA392B75DF8E44E9"
         },
-        android: {
-          href: "https://github.com/Tylerpro09/neostellar-releases/download/v2.1.42/Neostellar-Android-2.1.42.apk",
-          version: "2.1.42",
-          sha256: "9AE393CD0ECD670C65B8D9D67BADBF8F65AC8AC993AA3459AC1FE6B016932F1A"
-        }
       };
       let activeDownloads = { ...fallback };
 
@@ -438,21 +430,16 @@
       const applyDevice = () => {
         const ua = navigator.userAgent.toLowerCase();
         let platform = null;
-        if (ua.includes("android")) platform = "android";
-        else if (ua.includes("windows")) platform = "windows";
+        if (ua.includes("windows")) platform = "windows";
         else if (ua.includes("linux")) platform = "linux";
         if (platform && activeDownloads[platform]) {
           primary.textContent = platform === "windows"
             ? "Descargar Neostellar para Windows"
-            : platform === "linux"
-              ? "Descargar Neostellar para Linux"
-              : "Descargar Neostellar para Android";
+            : "Descargar Neostellar para Linux";
           primary.href = activeDownloads[platform].href;
           banner.textContent = platform === "windows"
             ? "Windows detectado · instalador recomendado"
-            : platform === "linux"
-              ? "Linux detectado · paquete x86_64 recomendado"
-              : "Android detectado · APK móvil estable";
+            : "Linux detectado · paquete x86_64 recomendado";
           cards.forEach(card => card.classList.toggle("recommended", card.dataset.platform === platform));
         } else {
           primary.textContent = "Elegir descarga";
@@ -472,6 +459,7 @@
         releaseBadge.textContent = tag + (manifest.channel === "stable" ? " estable" : " " + (manifest.channel || "disponible"));
         cards.forEach(card => {
           const platform = card.dataset.platform;
+          if (platform === "android") return;
           const info = manifest.platforms[platform];
           if (!info || !info.url) return;
           const actualVersion = versionFromUrl(info.url) || version;
