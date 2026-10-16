@@ -159,8 +159,7 @@
     .platform-icon { color: var(--cyan); font-size: 1.55rem; }
     .platform-version { display: inline-flex; align-self: flex-start; margin: 14px 0 12px; padding: 4px 8px; border-radius: 7px; color: var(--muted-strong); background: rgba(255,255,255,.06); font-size: .73rem; font-weight: 800; }
     .platform-tag { display: inline-flex; justify-content: center; align-items: center; min-height: 42px; margin-top: auto; border-radius: 11px; color: #07101d; background: linear-gradient(110deg, #a8b5ff, var(--cyan)); font-size: .77rem; font-weight: 900; letter-spacing: .05em; }
-    .platform-tag-disabled { width: 100%; border: 0; color: var(--muted-strong); background: rgba(255,255,255,.08); cursor: pointer; font: inherit; opacity: .82; }\n    .android-support-explanation { margin: 12px 0 0; color: var(--muted-strong); font-size: .78rem; line-height: 1.45; }
-    .checksum { margin-top: 12px; }
+    .platform-tag-disabled { width: 100%; border: 0; color: var(--muted-strong); background: rgba(255,255,255,.08); cursor: pointer; font: inherit; opacity: .82; }\n    .checksum { margin-top: 12px; }
     .checksum summary { cursor: pointer; color: var(--muted-strong); font-size: .72rem; }
     .checksum code { display: block; margin-top: 7px; color: #aebfff; font-size: .65rem; overflow-wrap: anywhere; }
     .hint { margin: 13px 0 0; color: var(--muted); font-size: .82rem; }
@@ -301,8 +300,7 @@
             <h3 id="android-support-title">Android</h3>
             <p>La edición Android ya no recibe soporte, actualizaciones ni descargas oficiales.</p>
             <span data-platform-version class="platform-version">v2.1.42 · soporte finalizado</span>
-            <button id="android-support-button" type="button" class="platform-tag platform-tag-disabled" aria-controls="android-support-explanation" aria-expanded="false">FIN DE SOPORTE</button>
-            <p id="android-support-explanation" class="android-support-explanation" hidden>Android se retiró por complicaciones de compatibilidad, mantenimiento y estabilidad entre dispositivos. Por eso ya no se distribuyen APK ni actualizaciones oficiales.</p>
+            <button id="android-support-button" type="button" class="platform-tag platform-tag-disabled" aria-label="Android: fin de soporte">FIN DE SOPORTE</button>
           </article>
         </div>
         <p class="hint">Android: fin de soporte. El botón se mantiene como aviso informativo y no ofrece ninguna descarga.</p>
@@ -423,7 +421,6 @@
       const releaseLink = document.getElementById("release-link");
       const releaseBadge = document.getElementById("release-badge");
       const androidSupportButton = document.getElementById("android-support-button");
-      const androidSupportExplanation = document.getElementById("android-support-explanation");
 
       const versionFromUrl = url => {
         const match = String(url || "").match(/v(\d+\.\d+\.\d+)/);
@@ -438,7 +435,7 @@
         else if (ua.includes("linux")) platform = "linux";
         if (platform === "android") {
           primary.textContent = "Android · fin de soporte";
-          primary.href = "#android-support-explanation";
+          primary.href = "#android-support-button";
           banner.textContent = "Android detectado · soporte finalizado";
           cards.forEach(card => card.classList.toggle("recommended", false));
           return;
@@ -459,16 +456,13 @@
         }
       };
 
-      const revealAndroidExplanation = event => {
+      const showAndroidSupportAlert = event => {
         if (event) event.preventDefault();
-        androidSupportExplanation.hidden = false;
-        androidSupportButton.setAttribute("aria-expanded", "true");
-        androidSupportButton.textContent = "FIN DE SOPORTE · MOTIVO";
-        androidSupportExplanation.scrollIntoView({ behavior: "smooth", block: "center" });
+        window.alert("Android ya no tiene soporte oficial por complicaciones de compatibilidad, mantenimiento y estabilidad entre dispositivos. No se distribuyen APK ni actualizaciones oficiales.");
       };
-      androidSupportButton.addEventListener("click", revealAndroidExplanation);
+      androidSupportButton.addEventListener("click", showAndroidSupportAlert);
       primary.addEventListener("click", event => {
-        if (navigator.userAgent.toLowerCase().includes("android")) revealAndroidExplanation(event);
+        if (navigator.userAgent.toLowerCase().includes("android")) showAndroidSupportAlert(event);
       });
 
       const applyManifest = manifest => {
