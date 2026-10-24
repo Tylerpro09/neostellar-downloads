@@ -48,7 +48,7 @@
   <main class="wrap">
     <div class="eyebrow">Guía oficial · versión 2.1.46</div>
     <h1>Documentación para despegar sin complicaciones.</h1>
-    <p class="lead">Aquí encontrarás los pasos para instalar Neostellar, entrar al multijugador, actualizar el cliente y crear mods Lua seguros.</p>
+    <p class="lead">Aquí encontrarás los pasos para instalar Neostellar, entrar al multijugador, actualizar el cliente y crear mods Lua seguros con un runtime organizado como un cargador de mods moderno.</p>
     <nav class="toc" aria-label="Secciones de documentación">
       <a href="#inicio">Instalación</a><a href="#online">Multijugador</a><a href="#updates">Actualizaciones</a><a href="#mods">Mods</a><a href="#problemas">Problemas comunes</a>
     </nav>
@@ -80,14 +80,29 @@
     <section id="mods">
       <div class="eyebrow">04 · Creadores</div>
       <h2>Crear un mod Lua</h2>
-      <div class="card"><p>Crea una carpeta dentro de <code>mods/</code> con un <code>manifest.json</code> y un <code>main.lua</code>:</p><pre>{
+      <div class="card"><p>Crea una carpeta dentro de <code>mods/</code> con un <code>manifest.json</code> y un <code>main.lua</code>. Actualmente el cliente no incluye mods oficiales; esta estructura queda lista para los primeros mods de la comunidad:</p><pre>{
   "id": "mi-primer-mod",
   "name": "Mi primer mod",
   "version": "1.0.0",
-  "api_version": 1,
+  "api_version": 2,
   "author": "Tu nombre",
-  "entry": "main.lua"
+  "description": "Contenido de ejemplo",
+  "entry": "main.lua",
+  "depends": [],
+  "load_after": [],
+  "load_before": [],
+  "environment": "client"
 }</pre><p>El runtime ofrece eventos como <code>init</code>, <code>update</code>, <code>draw</code>, <code>enemy_destroyed</code>, <code>wave_started</code>, <code>kill_boss_event</code> y <code>solo_sector_event</code>.</p><p>La API permite consultar entidades, crear enemigos y drops, mover la nave, ajustar salud y fuel, dar puntuación, cambiar oleadas, reproducir sonidos y crear HUD. Los callbacks tienen límites de tiempo, instrucciones y entidades por frame.</p><div class="note">Por seguridad, un mod no puede ejecutar procesos de Windows, leer credenciales, acceder a archivos privados, usar Python ni abrir sockets directos. Si un mod falla, se desactiva ese mod y el error queda registrado.</div><p>Consulta la guía completa incluida en la carpeta <code>mods/</code> del cliente.</p></div>
+      <h3>Runtime API 2</h3><p>El cargador sigue el modelo conceptual de Minecraft Java, sin copiar su código: cada mod tiene un ID propio, se carga en un orden estable y puede declarar dependencias. La API 1 continúa funcionando.</p><pre>function on_register()
+  neostellar.registry.register("enemy", "plasma_raider", {
+    base_type = "raider",
+    damage = 5
+  })
+end
+
+neostellar.events.register("update", function(data)
+  -- lógica del mod
+end)</pre><p>El ciclo de vida es <code>pre_init</code> → <code>register</code> → <code>post_init</code> → <code>init</code> y termina con <code>shutdown</code>. Los registros usan namespaces como <code>mi-primer-mod:plasma_raider</code> y admiten <code>enemy</code>, <code>drop</code>, <code>weapon</code>, <code>ability</code>, <code>minigame</code> y <code>hud</code>. Puedes consultar contenido con <code>neostellar.registry.list(tipo)</code> o <code>neostellar.registry.get(tipo, id)</code>.</p><div class="note">Por seguridad, un mod no puede ejecutar procesos de Windows, leer credenciales, acceder a archivos privados, usar Python ni abrir sockets directos. Si un mod falla, se desactiva ese mod y el error queda registrado.</div><p>Consulta también la guía incluida en la carpeta <code>mods/</code> del cliente para ver límites, skins y el canal de red propio del mod.</p></div>
     </section>
 
     <section id="problemas">
