@@ -93,7 +93,7 @@
   "load_before": [],
   "environment": "client"
 }</pre><p>El runtime ofrece eventos como <code>init</code>, <code>update</code>, <code>draw</code>, <code>enemy_destroyed</code>, <code>wave_started</code>, <code>kill_boss_event</code> y <code>solo_sector_event</code>.</p><p>La API permite consultar entidades, crear enemigos y drops, mover la nave, ajustar salud y fuel, dar puntuación, cambiar oleadas, reproducir sonidos y crear HUD. Los callbacks tienen límites de tiempo, instrucciones y entidades por frame.</p><div class="note">Por seguridad, un mod no puede ejecutar procesos de Windows, leer credenciales, acceder a archivos privados, usar Python ni abrir sockets directos. Si un mod falla, se desactiva ese mod y el error queda registrado.</div><p>Consulta la guía completa incluida en la carpeta <code>mods/</code> del cliente.</p></div>
-      <h3>Runtime API 2</h3><p>El cargador sigue el modelo conceptual de Minecraft Java, sin copiar su código: cada mod tiene un ID propio, se carga en un orden estable y puede declarar dependencias. La API 1 continúa funcionando.</p><pre>function on_register()
+      <h3>Una sola API estable</h3><p>El cargador sigue el modelo conceptual de Minecraft Java, sin copiar su código: todos los mods usan únicamente la API 2, cada mod tiene un ID propio, se carga en un orden estable y puede declarar dependencias. Un manifest con otra versión se marca como incompatible.</p><pre>function on_register()
   neostellar.registry.register("enemy", "plasma_raider", {
     base_type = "raider",
     damage = 5

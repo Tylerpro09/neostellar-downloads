@@ -5,5 +5,5 @@ La página apunta siempre al release estable más reciente. Actualmente: **v2.1.
 
 La guía pública está disponible en [Documentación](docs.html) e incluye instalación,
 actualizaciones, multijugador y creación segura de mods. La documentación de mods
-describe la API 2, dependencias, ciclo de vida y registros con namespace; API 1
-sigue siendo compatible.
+describe la única API estable (API 2), dependencias, ciclo de vida y registros con
+namespace.
