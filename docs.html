@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="Documentación oficial de Neostellar: instalación, multijugador, actualizaciones y mods.">
+  <title>Neostellar · Documentación</title>
+  <style>
+    :root { color-scheme: dark; --bg:#050914; --panel:rgba(11,23,43,.78); --line:rgba(139,182,255,.2); --cyan:#69e4ff; --text:#f3f7ff; --muted:#a6b4d0; --green:#77e2b0; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; min-width:320px; color:var(--text); background:radial-gradient(circle at 12% -8%,rgba(119,133,255,.28),transparent 30rem),linear-gradient(155deg,#050914,#081124 55%,#0c1028); font:16px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
+    a { color:var(--cyan); }
+    .wrap { width:min(1040px,calc(100% - 36px)); margin:auto; }
+    header { position:sticky; top:0; z-index:2; border-bottom:1px solid rgba(255,255,255,.1); background:rgba(5,9,20,.86); backdrop-filter:blur(18px); }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:72px; }
+    .brand { color:var(--text); font-weight:900; letter-spacing:.16em; text-decoration:none; }
+    .back { padding:8px 13px; border:1px solid var(--line); border-radius:999px; text-decoration:none; font-size:.86rem; }
+    main { padding:68px 0 90px; }
+    .eyebrow { color:var(--cyan); font-size:.75rem; font-weight:850; letter-spacing:.18em; text-transform:uppercase; }
+    h1 { max-width:760px; margin:16px 0 14px; font-size:clamp(2.6rem,7vw,5.6rem); line-height:.96; letter-spacing:-.07em; }
+    h2 { margin:0 0 13px; font-size:clamp(1.7rem,3vw,2.4rem); letter-spacing:-.05em; }
+    h3 { margin:0 0 8px; font-size:1.2rem; }
+    .lead { max-width:720px; color:var(--muted); font-size:1.08rem; }
+    .toc { display:flex; flex-wrap:wrap; gap:10px; margin:28px 0 0; }
+    .toc a { padding:8px 12px; border:1px solid var(--line); border-radius:999px; text-decoration:none; font-size:.84rem; }
+    section { scroll-margin-top:94px; margin-top:74px; }
+    .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:15px; }
+    .card { padding:22px; border:1px solid var(--line); border-radius:20px; background:var(--panel); box-shadow:0 16px 44px rgba(0,0,0,.16); }
+    .card p, .card li { color:var(--muted); }
+    .card ul, .card ol { margin:10px 0 0; padding-left:22px; }
+    .note { margin-top:18px; padding:15px 17px; border-left:3px solid var(--cyan); border-radius:10px; background:rgba(105,228,255,.08); color:var(--muted); }
+    code { color:#cbd5ff; font:.9em ui-monospace,SFMono-Regular,Consolas,monospace; }
+    pre { margin:14px 0 0; padding:16px; overflow:auto; border:1px solid var(--line); border-radius:12px; background:#030812; color:#dce7ff; font-size:.82rem; }
+    .ok { color:var(--green); }
+    footer { border-top:1px solid rgba(255,255,255,.1); padding:28px 0 42px; color:var(--muted); font-size:.86rem; }
+    @media (max-width:700px) { .grid { grid-template-columns:1fr; } main { padding-top:48px; } .nav { min-height:64px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="./">NEOSTELLAR</a>
+      <a class="back" href="./">← Centro de descargas</a>
+    </div>
+  </header>
+  <main class="wrap">
+    <div class="eyebrow">Guía oficial · versión 2.1.46</div>
+    <h1>Documentación para despegar sin complicaciones.</h1>
+    <p class="lead">Aquí encontrarás los pasos para instalar Neostellar, entrar al multijugador, actualizar el cliente y crear mods Lua seguros.</p>
+    <nav class="toc" aria-label="Secciones de documentación">
+      <a href="#inicio">Instalación</a><a href="#online">Multijugador</a><a href="#updates">Actualizaciones</a><a href="#mods">Mods</a><a href="#problemas">Problemas comunes</a>
+    </nav>
+
+    <section id="inicio">
+      <div class="eyebrow">01 · Primeros pasos</div>
+      <h2>Instalar y abrir el juego</h2>
+      <div class="grid">
+        <article class="card"><h3>Windows</h3><ol><li>Descarga el instalador x64 desde el <a href="https://github.com/Tylerpro09/neostellar-releases/releases/tag/v2.1.46">release oficial</a>.</li><li>Ejecuta el setup y elige la carpeta de instalación.</li><li>Abre Neostellar desde el acceso directo o desde el menú Inicio.</li></ol><p class="note">El instalador actual no tiene firma PFX configurada. Comprueba el SHA-256 publicado antes de ejecutarlo.</p></article>
+        <article class="card"><h3>Linux x86_64</h3><ol><li>Descarga el paquete .tar.gz.</li><li>Extrae la carpeta en un directorio de tu usuario.</li><li>Desde esa carpeta ejecuta <code>./neostellar</code>.</li></ol><p class="note">No uses sudo para iniciar el juego. Si el archivo no tiene permiso, aplica permiso de ejecución a ese binario.</p></article>
+      </div>
+    </section>
+
+    <section id="online">
+      <div class="eyebrow">02 · Juego online</div>
+      <h2>Multijugador y modo global</h2>
+      <div class="card"><p>El cliente debe usar la misma versión que el servidor. Actualmente es <strong>2.1.46</strong>. El modo global entra directamente al mundo compartido y no necesita una sala intermedia.</p><ul><li>Actualiza antes de entrar si el servidor rechaza tu versión.</li><li>Desactiva los mods locales para usar el multijugador oficial.</li><li>Consulta el <a href="https://neostellar-server.onrender.com/health">estado del servidor</a> si no puedes conectar.</li></ul></div>
+    </section>
+
+    <section id="updates">
+      <div class="eyebrow">03 · Mantenimiento</div>
+      <h2>Actualizaciones e integridad</h2>
+      <div class="grid">
+        <article class="card"><h3>Manifiesto</h3><p>El sitio y el cliente consultan <a href="https://raw.githubusercontent.com/Tylerpro09/neostellar-releases/main/latest.json">latest.json</a>, que indica versión, tamaño y SHA-256 de cada plataforma.</p></article>
+        <article class="card"><h3>Versiones disponibles</h3><p><strong class="ok">Windows y Linux:</strong> 2.1.46. Android permanece sin soporte oficial por problemas de compatibilidad y estabilidad.</p></article>
+      </div>
+    </section>
+
+    <section id="mods">
+      <div class="eyebrow">04 · Creadores</div>
+      <h2>Crear un mod Lua</h2>
+      <div class="card"><p>Crea una carpeta dentro de <code>mods/</code> con un <code>manifest.json</code> y un <code>main.lua</code>:</p><pre>{
+  "id": "mi-primer-mod",
+  "name": "Mi primer mod",
+  "version": "1.0.0",
+  "api_version": 1,
+  "author": "Tu nombre",
+  "entry": "main.lua"
+}</pre><p>El runtime ofrece eventos como <code>init</code>, <code>update</code>, <code>draw</code>, <code>enemy_destroyed</code>, <code>wave_started</code>, <code>kill_boss_event</code> y <code>solo_sector_event</code>.</p><p>La API permite consultar entidades, crear enemigos y drops, mover la nave, ajustar salud y fuel, dar puntuación, cambiar oleadas, reproducir sonidos y crear HUD. Los callbacks tienen límites de tiempo, instrucciones y entidades por frame.</p><div class="note">Por seguridad, un mod no puede ejecutar procesos de Windows, leer credenciales, acceder a archivos privados, usar Python ni abrir sockets directos. Si un mod falla, se desactiva ese mod y el error queda registrado.</div><p>Consulta la guía completa incluida en la carpeta <code>mods/</code> del cliente.</p></div>
+    </section>
+
+    <section id="problemas">
+      <div class="eyebrow">05 · Ayuda</div>
+      <h2>Problemas comunes</h2>
+      <div class="grid">
+        <article class="card"><h3>No abre el juego</h3><p>Descarga otra vez el paquete correcto, verifica el SHA-256 y revisa la carpeta <code>logs/</code>. En Linux confirma que estás usando el binario x86_64.</p></article>
+        <article class="card"><h3>No puedo entrar online</h3><p>Confirma que tienes la versión 2.1.46, que el servidor está disponible y que no hay mods oficiales activos bloqueando la conexión.</p></article>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap">© 2026 Neostellar · Animix Software · <a href="https://github.com/Tylerpro09/neostellar-code">Código fuente</a> · <a href="https://discord.gg/SeQTdaxWmX">Discord</a></div></footer>
+</body>
+</html>
